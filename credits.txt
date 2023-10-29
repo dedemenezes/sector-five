@@ -6,12 +6,10 @@ Learn Game Programming with Ruby
 by Mark Sobkowicz
 
 ---Images---
-
 Game art from OpenGameArt.org
 Licensed under Creative Commons: Public Domain CC0
 
 --Music--
-
 "Mystic Force" Kevin MacLeod (incompetech.com)
 Licensed under Creative Commons: By Attribution 4.0 License
 http://creativecommons.org/licenses/by/4.0/
@@ -23,3 +21,7 @@ http://creativecommons.org/licenses/by/4.0/
 "Phantom from Space" Kevin MacLeod (incompetech.com)
 Licensed under Creative Commons: By Attribution 4.0 License
 http://creativecommons.org/licenses/by/4.0/
+
+---Sound Effects---
+Sound effects from freesound.org
+Licensed under Creative Commons: Public Domain CC0
