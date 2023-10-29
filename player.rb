@@ -5,6 +5,7 @@ require_relative 'moveable'
 # SHIP
 class Player
   include Moveable
+  attr_reader :x, :y, :angle, :radius
 
   def initialize(window)
     @window = window
