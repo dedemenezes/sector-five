@@ -17,6 +17,9 @@ class SectorFiveScenes < Gosu::Window
     super(WIDTH, HEIGHT)
 
     self.caption = 'Sector Five'
+    @start_music = Gosu::Song.new(File.join(__dir__, 'sounds/start_bg.mp3'))
+    @start_music.play(true)
+
     @background_image = Gosu::Image.new('images/start_screen.png')
     @scene = :start
   end
@@ -65,6 +68,9 @@ class SectorFiveScenes < Gosu::Window
   end
 
   def initialize_game
+    @game_music = Gosu::Song.new(File.join(__dir__, 'sounds/end_bg.mp3'))
+    @game_music.play(true)
+
     @player = Player.new(self)
     @enemies = []
     @bullets = []
@@ -144,6 +150,9 @@ class SectorFiveScenes < Gosu::Window
   end
 
   def initialize_end(fate)
+    @end_music = Gosu::Song.new(File.join(__dir__, 'sounds/game_bg.mp3'))
+    @end_music.play(true)
+
     case fate
     when :count_reached
       @message = "You made it! You destroyed #{@enemies_destroyed} ships"
