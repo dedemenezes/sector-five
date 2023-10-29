@@ -1,9 +1,10 @@
 class Bullet
   SPEED = 5
+  attr_reader :x, :y, :radius
 
   def initialize(window, x, y, angle)
     @image = Gosu::Image.new('images/bullet.png')
-    @radius = 5
+    @radius = 1.5
 
     @x = x
     @y = y

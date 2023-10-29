@@ -22,15 +22,26 @@ class SectorFive < Gosu::Window
   end
 
   def update
-    @enemies << Enemy.new(self) if rand < ENEMY_FREQUENCY
-    @enemies.each(&:move)
-
     @player.turn_left if button_down?(Gosu::KB_LEFT)
     @player.turn_right if button_down?(Gosu::KB_RIGHT)
     @player.accelerate if button_down?(Gosu::KB_UP)
     @player.move
 
+    @enemies << Enemy.new(self) if rand < ENEMY_FREQUENCY
+    @enemies.each(&:move)
     @bullets.each(&:move)
+
+    @enemies.dup.each do |enemy|
+      @bullets.dup.each do |bullet|
+        distance = Gosu.distance(enemy.x, enemy.y, bullet.x, bullet.y)
+        if distance < enemy.radius + enemy.radius
+          @enemies.delete(enemy)
+          @bullets.delete(bullet)
+        end
+      end
+    end
+
+
   end
 
   def draw
