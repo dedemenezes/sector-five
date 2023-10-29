@@ -28,6 +28,7 @@ class SectorFive < Gosu::Window
     update_enemies
     update_bullets
     war_casualties
+    @explosions.each(&:move)
     general_cleaning
   end
 
@@ -70,7 +71,8 @@ class SectorFive < Gosu::Window
 
         @enemies.delete(enemy)
         @bullets.delete(bullet)
-        @explosions << Explosion.new(self, enemy.x, enemy.y)
+        from_player_to_enemy = Gosu.distance(enemy.x, enemy.y, bullet.x, bullet.y)
+        @explosions << Explosion.new(self, enemy.x, enemy.y, bullet.angle, from_player_to_enemy)
       end
     end
   end

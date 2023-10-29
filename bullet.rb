@@ -6,7 +6,7 @@ require_relative 'box'
 class Bullet
   include Box
   SPEED = 5
-  attr_reader :x, :y, :radius, :window
+  attr_reader :x, :y, :radius, :window, :angle
 
   def initialize(window, x, y, angle)
     @image = Gosu::Image.new('images/bullet.png')
