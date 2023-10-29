@@ -78,6 +78,8 @@ class SectorFiveScenes < Gosu::Window
     @scene = :game
     @enemies_appeared = 0
     @enemies_destroyed = 0
+    @explosion_sound = Gosu::Sample.new(File.join(__dir__, 'sounds/explosion.wav'))
+    @shooting_sound = Gosu::Sample.new(File.join(__dir__, 'sounds/shoot.wav'))
   end
 
   def draw_game
@@ -115,6 +117,7 @@ class SectorFiveScenes < Gosu::Window
         from_player_to_enemy = Gosu.distance(enemy.x, enemy.y, bullet.x, bullet.y)
         @explosions << Explosion.new(self, enemy.x, enemy.y, bullet.angle, from_player_to_enemy)
         @enemies_destroyed += 1
+        @explosion_sound.play
       end
     end
 
@@ -147,6 +150,7 @@ class SectorFiveScenes < Gosu::Window
     return unless id == Gosu::KbSpace
 
     @bullets.push Bullet.new(self, @player.x, @player.y, @player.angle)
+    @shooting_sound.play(0.3)
   end
 
   def initialize_end(fate)
