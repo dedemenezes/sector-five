@@ -28,6 +28,7 @@ class SectorFive < Gosu::Window
     update_enemies
     update_bullets
     war_casualties
+    general_cleaning
   end
 
   def draw
@@ -68,9 +69,15 @@ class SectorFive < Gosu::Window
         if distance < enemy.radius + enemy.radius
           @enemies.delete(enemy)
           @bullets.delete(bullet)
-          @explosions << Explosion.new(self, enemy.x,enemy.y)
+          @explosions << Explosion.new(self, enemy.x, enemy.y)
         end
       end
+    end
+  end
+
+  def general_cleaning
+    @explosions.dup.each do |explosion|
+      @explosions.delete(explosion) if explosion.finished?
     end
   end
 end
