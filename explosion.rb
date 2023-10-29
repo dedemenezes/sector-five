@@ -10,6 +10,7 @@ class Explosion
     @radius = 30
     @finished = false
     @image_index = 0
+    @frame_count = 0
     @speed = speed
   end
 
@@ -19,8 +20,11 @@ class Explosion
 
   def draw
     if @image_index < @images.count
-      @images[@image_index].draw(@x - @radius, @y - @radius, 2)
-      @image_index += 1
+      if @frame_count.even?
+        @images[@image_index].draw(@x - @radius, @y - @radius, 2)
+        @image_index += 1
+      end
+      @frame_count += 1
     else
       @finished = true
     end
@@ -35,6 +39,7 @@ class Explosion
   private
 
   def real_speed
-    @speed.fdiv(3)
+    # p @speed
+    @speed.fdiv(4.5)
   end
 end
