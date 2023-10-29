@@ -6,8 +6,7 @@ require_relative 'enemy'
 require_relative 'bullet'
 require_relative 'explosion'
 
-# Runs the game
-class SectorFive < Gosu::Window
+class SectorFiveScenes < Gosu::Window
   WIDTH = 800
   HEIGHT = 600
   ENEMY_FREQUENCY = 0.05
@@ -18,56 +17,79 @@ class SectorFive < Gosu::Window
     self.caption = 'Sector Five'
     @background_image = Gosu::Image.new('images/start_screen.png')
     @scene = :start
+  end
 
+  def update
+    case @scene
+    when :game
+      update_game
+    when :end
+      # update_end
+    end
+  end
 
+  def draw
+    case @scene
+    when :start
+      draw_start
+    when :game
+      draw_game
+    when :end
+      draw_end
+    end
+  end
+
+  def button_down(id)
+    case @scene
+    when :start
+      button_down_start(id)
+    when :game
+      button_down_game(id)
+    else
+      "no se"
+    end
+  end
+
+  private
+
+  def draw_start
+    @background_image.draw(0, 0, 0)
+  end
+
+  def button_down_start(id)
+    initialize_game
+  end
+
+  def initialize_game
     @player = Player.new(self)
     @enemies = []
     @bullets = []
     @explosions = []
-
+    @scene = :game
   end
 
-  def update
-    update_player
-    update_enemies
-    update_bullets
-    war_casualties
-    @explosions.each(&:move)
-    general_cleaning
-  end
-
-  def draw
+  def draw_game
     @player.draw
     @enemies.each(&:draw)
     @bullets.each(&:draw)
     @explosions.each(&:draw)
   end
 
-  def button_down(id)
-    return unless id == Gosu::KbSpace
-
-    @bullets.push Bullet.new(self, @player.x, @player.y, @player.angle)
-  end
-
-  private
-
-  def update_player
+  def update_game
+    # PLAYER
     @player.turn_left if button_down?(Gosu::KB_LEFT)
     @player.turn_right if button_down?(Gosu::KB_RIGHT)
     @player.accelerate if button_down?(Gosu::KB_UP)
     @player.move
-  end
 
-  def update_enemies
+    # ENEMIES
     @enemies << Enemy.new(self) if rand < ENEMY_FREQUENCY
     @enemies.each(&:move)
-  end
 
-  def update_bullets
+    # BILLETS
     @bullets.each(&:move)
-  end
 
-  def war_casualties
+    # COLLISIONS
     @enemies.dup.each do |enemy|
       @bullets.dup.each do |bullet|
         distance = Gosu.distance(enemy.x, enemy.y, bullet.x, bullet.y)
@@ -79,9 +101,11 @@ class SectorFive < Gosu::Window
         @explosions << Explosion.new(self, enemy.x, enemy.y, bullet.angle, from_player_to_enemy)
       end
     end
-  end
 
-  def general_cleaning
+    # EXPLOSIONS
+    @explosions.each(&:move)
+
+    # CLEANING
     @explosions.dup.each do |explosion|
       @explosions.delete(explosion) if explosion.finished?
     end
@@ -95,7 +119,12 @@ class SectorFive < Gosu::Window
       @enemies.delete enemy unless enemy.on_screen?
     end
   end
+
+  def button_down_game(id)
+    return unless id == Gosu::KbSpace
+
+    @bullets.push Bullet.new(self, @player.x, @player.y, @player.angle)
+  end
 end
 
-window = SectorFive.new
-window.show
+SectorFiveScenes.new.show
