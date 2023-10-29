@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module Moveable
-  ACCELERATION = 2
-  FRICTION_SPEED = 0.9
-  ROTATION_SPEED = 3.0
+  ACCELERATION = 0.42
+  FRICTION_SPEED = 0.962
+  ROTATION_SPEED = 2.87
 
   def move
     @x += @velocity_x
