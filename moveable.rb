@@ -10,16 +10,19 @@ module Moveable
     @y += @velocity_y
     @velocity_x *= FRICTION_SPEED
     @velocity_y *= FRICTION_SPEED
-    if @x > @window.width - @radius
+
+    if at_right_edge?
       @velocity_x = 0
-      @x = @window.width - @radius
+      @x = right_edge
     end
-    if @x < @radius
+
+    if at_left_edge?
       @velocity_x = 0
-      @x = @radius
+      @x = player_edge
     end
-    if @y > @window.height - @radius
-      @y = @window.height - @radius
+    if at_bottom_edge?
+      @velocity_y = 0
+      @y = bottom_edge
     end
   end
 
@@ -28,11 +31,35 @@ module Moveable
     @velocity_y += Gosu.offset_y(@angle, ACCELERATION)
   end
 
+  def player_edge
+    @radius
+  end
+
   def turn_right
     @angle += ROTATION_SPEED
   end
 
   def turn_left
     @angle -= ROTATION_SPEED
+  end
+
+  def at_left_edge?
+    @x < player_edge
+  end
+
+  def at_right_edge?
+    @x > right_edge
+  end
+
+  def right_edge
+    @window.width - @radius
+  end
+
+  def at_bottom_edge?
+    @y > bottom_edge
+  end
+
+  def bottom_edge
+    @window.height - @radius
   end
 end
