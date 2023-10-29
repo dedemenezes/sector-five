@@ -5,8 +5,10 @@ require_relative 'player'
 
 # Runs the game
 class SectorFive < Gosu::Window
+  WIDTH = 800
+  HEIGHT = 600
   def initialize
-    super(800, 600)
+    super(WIDTH, HEIGHT)
 
     self.caption = 'Sector Five'
 

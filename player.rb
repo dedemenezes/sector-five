@@ -1,9 +1,15 @@
+# frozen_string_literal: true
+
 require_relative 'moveable'
 
+# SHIP
 class Player
   include Moveable
+
   def initialize(window)
+    @window = window
     @image = Gosu::Image.new('images/ship.png')
+    @radius = 20
 
     @x = 200
     @y = 200
