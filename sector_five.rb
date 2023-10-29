@@ -79,6 +79,11 @@ class SectorFive < Gosu::Window
     @explosions.dup.each do |explosion|
       @explosions.delete(explosion) if explosion.finished?
     end
+
+    @bullets.dup.each_with_index do |bullet, index|
+      # puts "####{bullet.on_screen?}#{bullet.on_screen?}#{index}#{index}####"
+      @bullets.delete bullet unless bullet.on_screen?
+    end
   end
 end
 
