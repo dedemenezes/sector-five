@@ -3,7 +3,6 @@ require_relative 'box'
 
 class Enemy
   include Box
-  SPEED = 1.7
   attr_reader :x, :y, :radius, :window
 
   def initialize(window)
@@ -13,6 +12,8 @@ class Enemy
     @x = rand(window.width - 2 * @radius) + @radius
     @y = rand + @radius
     @window = window
+    random = rand
+    @speed = random < 0.5 ? random + 1 : random
   end
 
   def draw
@@ -20,6 +21,6 @@ class Enemy
   end
 
   def move
-    @y += SPEED
+    @y += @speed
   end
 end
