@@ -20,10 +20,10 @@ module Moveable
       @velocity_x = 0
       @x = player_edge
     end
-    if at_bottom_edge?
-      @velocity_y = 0
-      @y = bottom_edge
-    end
+    return unless at_bottom_edge?
+
+    @velocity_y = 0
+    @y = bottom_edge
   end
 
   def accelerate

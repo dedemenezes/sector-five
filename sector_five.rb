@@ -66,11 +66,11 @@ class SectorFive < Gosu::Window
     @enemies.dup.each do |enemy|
       @bullets.dup.each do |bullet|
         distance = Gosu.distance(enemy.x, enemy.y, bullet.x, bullet.y)
-        if distance < enemy.radius + enemy.radius
-          @enemies.delete(enemy)
-          @bullets.delete(bullet)
-          @explosions << Explosion.new(self, enemy.x, enemy.y)
-        end
+        next unless distance < enemy.radius + enemy.radius
+
+        @enemies.delete(enemy)
+        @bullets.delete(bullet)
+        @explosions << Explosion.new(self, enemy.x, enemy.y)
       end
     end
   end
@@ -80,9 +80,13 @@ class SectorFive < Gosu::Window
       @explosions.delete(explosion) if explosion.finished?
     end
 
-    @bullets.dup.each_with_index do |bullet, index|
+    @bullets.dup.each do |bullet|
       # puts "####{bullet.on_screen?}#{bullet.on_screen?}#{index}#{index}####"
       @bullets.delete bullet unless bullet.on_screen?
+    end
+
+    @enemies.dup.each do |enemy|
+      @enemies.delete enemy unless enemy.on_screen?
     end
   end
 end

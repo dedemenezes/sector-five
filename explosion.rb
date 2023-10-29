@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Explosion
   def initialize(window, x, y)
     @window = window

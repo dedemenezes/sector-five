@@ -1,6 +1,10 @@
+# frozen_string_literal: true
+require_relative 'box'
+
 class Enemy
+  include Box
   SPEED = 1.7
-  attr_reader :x, :y, :radius
+  attr_reader :x, :y, :radius, :window
 
   def initialize(window)
     @image = Gosu::Image.new('images/enemy.png')
@@ -8,6 +12,7 @@ class Enemy
 
     @x = rand(window.width - 2 * @radius) + @radius
     @y = rand + @radius
+    @window = window
   end
 
   def draw
